@@ -11,7 +11,7 @@
   "credits": "Visroom color palette from Thaumcraft 6 by Azanor.",
   "logoFile": "assets/visroom_powder/textures/logo.png",
   "screenshots": [],
-  "requiredMods": [thaumcraft],
+  "requiredMods": ["thaumcraft"],
   "dependencies": []
 }
 ]
