@@ -1,0 +1,12 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"item": "thaumcraft:vishroom"
+		}
+	],
+	"result": {
+		"item": "visromm_powder:visroom_powder",
+		"count": 1
+	}
+}
