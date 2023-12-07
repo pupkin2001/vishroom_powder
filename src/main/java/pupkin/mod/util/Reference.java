@@ -7,7 +7,7 @@ public class Reference
 	public static final String NAME = "Visroom Powder";
 	public static final String BUILD = "GRADLE:BUILD";
 	public static final String VERSION = "GRADLE:VERSION-" + BUILD;
-	public static final String DEPENDENCIES = "required-after:thaumcraft";
+	public static final String DEPENDENCIES = "";
 	public static final String ACCEPTED_VERSIONS = "[1.12, 1.12.1, 1.12.2]";
 
 	// Proxy Constants
