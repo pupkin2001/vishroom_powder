@@ -1,8 +1,9 @@
 package pupkin.mod.potion;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
+import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
 
@@ -17,6 +18,6 @@ public class YellowTintEffect extends Potion {
 
 	@Override
 	public void performEffect(@Nonnull EntityLivingBase entity, int amplifier) {
-		
+
 	}
 }
