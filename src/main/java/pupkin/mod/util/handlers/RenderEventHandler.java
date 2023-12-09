@@ -19,16 +19,13 @@ public class RenderEventHandler {
 			return;
 		}
 
-		GL11.glColor4f(1.0F, 1.0F, 0.0F, 0.2F);
+		GL11.glColor4f(1F, 1F, 0.0F, 0.1F);
 		GL11.glDisable(GL11.GL_LIGHTING);
 
-		// Получаем разрешение экрана
 		ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
 
-		// Рисуем прямоугольник, занимающий весь экран
 		Gui.drawRect(0, 0, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight(), 0xFFFF00);
 
-		// Сбрасываем цвет и освещение, чтобы не затронуть другие элементы интерфейса
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glEnable(GL11.GL_LIGHTING);
 	}
