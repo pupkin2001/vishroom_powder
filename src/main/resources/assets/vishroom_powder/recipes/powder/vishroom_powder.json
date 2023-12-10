@@ -3,12 +3,6 @@
   "ingredients": [
     {
       "item": "thaumcraft:vishroom"
-    },
-    {
-      "item": "minecraft:bowl"
-    },
-    {
-      "item": "minecraft:flint"
     }
   ],
   "result": {
