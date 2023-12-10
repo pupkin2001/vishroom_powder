@@ -9,6 +9,8 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import pupkin.mod.potion.YellowTintEffect;
@@ -23,6 +25,7 @@ public class RenderEventHandler
 	private static float defaultFogEnd = 1.0F;
 
 	@SubscribeEvent(priority = EventPriority.NORMAL)
+	@SideOnly(Side.CLIENT)
 	public static void onRenderWorldLast(EntityViewRenderEvent.FogColors event)
 	{
 		if (Minecraft.getMinecraft().player != null && Minecraft.getMinecraft().player.isPotionActive(YellowTintEffect.YELLOW_TINT)) {
@@ -59,6 +62,7 @@ public class RenderEventHandler
 	}
 
 	@SubscribeEvent(priority = EventPriority.NORMAL)
+	@SideOnly(Side.CLIENT)
 	public static void onRenderOverlay(RenderGameOverlayEvent event)
 	{
 		if (event.isCancelable() || !Minecraft.getMinecraft().player.isPotionActive(YellowTintEffect.YELLOW_TINT)) {
