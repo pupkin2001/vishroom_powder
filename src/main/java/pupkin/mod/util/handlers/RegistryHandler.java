@@ -30,9 +30,8 @@ public class RegistryHandler
 	}
 
 	@SubscribeEvent
-	public static void registerPotions(RegistryEvent.Register<Potion> event) {
-		event.getRegistry().registerAll(
-				YellowTintEffect.YELLOW_TINT
-		);
+	public static void registerPotions(RegistryEvent.Register<Potion> event)
+	{
+		event.getRegistry().registerAll(YellowTintEffect.YELLOW_TINT);
 	}
 }

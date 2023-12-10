@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 
 public interface IHasModel
 {
-	public void registerModels();
+	void registerModels();
 
 	ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn);
 }

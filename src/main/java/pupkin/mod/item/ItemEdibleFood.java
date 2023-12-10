@@ -10,17 +10,18 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import pupkin.mod.VisroomPowder;
+import pupkin.mod.VishroomPowder;
 import pupkin.mod.init.ItemInit;
 import pupkin.mod.util.interfaces.IHasModel;
 
-import javax.annotation.Nonnull; // Import the Nonnull annotation
-
+import javax.annotation.Nonnull;
 import java.util.Random;
 
-public class ItemEdibleFood extends ItemFood implements IHasModel {
+public class ItemEdibleFood extends ItemFood implements IHasModel
+{
 
-	public ItemEdibleFood(String name, CreativeTabs tab, int amount, float saturation, boolean isWolfFood) {
+	public ItemEdibleFood(String name, CreativeTabs tab, int amount, float saturation, boolean isWolfFood)
+	{
 		super(amount, saturation, isWolfFood);
 		setUnlocalizedName(name);
 		setRegistryName(name);
@@ -30,12 +31,14 @@ public class ItemEdibleFood extends ItemFood implements IHasModel {
 	}
 
 	@Override
-	public void registerModels() {
-		VisroomPowder.proxy.registerModel(this, 0);
+	public void registerModels()
+	{
+		VishroomPowder.proxy.registerModel(this, 0);
 	}
 
 	@Override
-	protected void onFoodEaten(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull EntityPlayer player) {
+	protected void onFoodEaten(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull EntityPlayer player)
+	{
 		// Add your random potion effect here
 		Random random = new Random();
 		int randomEffect = random.nextInt(3); // Change 3 to the number of potion effects you want to apply
@@ -56,7 +59,8 @@ public class ItemEdibleFood extends ItemFood implements IHasModel {
 		super.onFoodEaten(stack, worldIn, player);
 	}
 
-	private void applyPotionEffect(EntityLivingBase entity, Potion potion) {
+	private void applyPotionEffect(EntityLivingBase entity, Potion potion)
+	{
 		if (potion != null) {
 			entity.addPotionEffect(new PotionEffect(potion, 200, 1)); // Adjust the duration and amplifier as needed
 		}
@@ -64,7 +68,8 @@ public class ItemEdibleFood extends ItemFood implements IHasModel {
 
 	@Nonnull
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, @Nonnull EntityPlayer playerIn, @Nonnull EnumHand handIn) {
+	public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, @Nonnull EntityPlayer playerIn, @Nonnull EnumHand handIn)
+	{
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 }

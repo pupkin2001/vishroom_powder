@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "thaumcraft:visroom"
+      "item": "thaumcraft:vishroom"
     },
     {
       "item": "minecraft:bowl"
@@ -12,6 +12,6 @@
     }
   ],
   "result": {
-    "item": "visroom_powder:visroom_powder"
+    "item": "vishroom_powder:vishroom_powder"
   }
 }

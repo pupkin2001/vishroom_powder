@@ -16,14 +16,15 @@ import pupkin.mod.potion.YellowTintEffect;
 import java.nio.FloatBuffer;
 
 @Mod.EventBusSubscriber
-public class RenderEventHandler {
-
+public class RenderEventHandler
+{
 	private static float defaultFogDensity = 0.0F;
 	private static float defaultFogStart = 0.0F;
 	private static float defaultFogEnd = 1.0F;
 
 	@SubscribeEvent(priority = EventPriority.NORMAL)
-	public static void onRenderWorldLast(EntityViewRenderEvent.FogColors event) {
+	public static void onRenderWorldLast(EntityViewRenderEvent.FogColors event)
+	{
 		if (Minecraft.getMinecraft().player != null && Minecraft.getMinecraft().player.isPotionActive(YellowTintEffect.YELLOW_TINT)) {
 			Potion potion = YellowTintEffect.YELLOW_TINT;
 			int color = potion.getLiquidColor();
@@ -58,7 +59,8 @@ public class RenderEventHandler {
 	}
 
 	@SubscribeEvent(priority = EventPriority.NORMAL)
-	public static void onRenderOverlay(RenderGameOverlayEvent event) {
+	public static void onRenderOverlay(RenderGameOverlayEvent event)
+	{
 		if (event.isCancelable() || !Minecraft.getMinecraft().player.isPotionActive(YellowTintEffect.YELLOW_TINT)) {
 			return;
 		}
@@ -91,14 +93,16 @@ public class RenderEventHandler {
 		GlStateManager.enableDepth();
 	}
 
-	private static FloatBuffer setColorBuffer(float red, float green, float blue) {
+	private static FloatBuffer setColorBuffer(float red, float green, float blue)
+	{
 		FloatBuffer colorBuffer = BufferUtils.createFloatBuffer(4);
 		colorBuffer.put(red).put(green).put(blue).put(1.0F);
 		colorBuffer.flip();
 		return colorBuffer;
 	}
 
-	private static void saveDefaultFogValues() {
+	private static void saveDefaultFogValues()
+	{
 		defaultFogDensity = GL11.glGetFloat(GL11.GL_FOG_DENSITY);
 		defaultFogStart = GL11.glGetFloat(GL11.GL_FOG_START);
 		defaultFogEnd = GL11.glGetFloat(GL11.GL_FOG_END);
