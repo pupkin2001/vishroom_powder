@@ -17,13 +17,13 @@ import javax.annotation.Nonnull;
 
 public class ItemVishroomPowder extends ItemFood implements IHasModel
 {
-
 	public ItemVishroomPowder(String name, CreativeTabs tab, int amount, float saturation, boolean isWolfFood)
 	{
 		super(amount, saturation, isWolfFood);
 		setUnlocalizedName(name);
 		setRegistryName(name);
 		setCreativeTab(tab);
+		setMaxStackSize(Integer.MAX_VALUE);
 
 		ItemInit.ITEMS.add(this);
 	}
@@ -44,7 +44,7 @@ public class ItemVishroomPowder extends ItemFood implements IHasModel
 	private void applyCustomEffect(EntityLivingBase entity)
 	{
 		if (!entity.world.isRemote) {
-			entity.addPotionEffect(new PotionEffect(YellowTintEffect.YELLOW_TINT, 200, 0));
+			entity.addPotionEffect(new PotionEffect(YellowTintEffect.YELLOW_TINT, 1200, 0));
 		}
 	}
 
@@ -52,6 +52,7 @@ public class ItemVishroomPowder extends ItemFood implements IHasModel
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, @Nonnull EntityPlayer playerIn, @Nonnull EnumHand handIn)
 	{
+		playerIn.setActiveHand(handIn);
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 }
