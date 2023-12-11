@@ -6,11 +6,14 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.registries.IForgeRegistry;
 import pupkin.mod.init.ItemInit;
+import pupkin.mod.potion.ClairvoyanceEffect;
 import pupkin.mod.potion.YellowTintEffect;
+import pupkin.mod.util.Reference;
 import pupkin.mod.util.interfaces.IHasModel;
 
-@EventBusSubscriber
+@EventBusSubscriber(modid = Reference.MOD_ID)
 public class RegistryHandler
 {
 	@SubscribeEvent
@@ -22,16 +25,18 @@ public class RegistryHandler
 	@SubscribeEvent
 	public static void registerModels(ModelRegistryEvent event)
 	{
-		for (Item item : ItemInit.ITEMS) {
-			if (item instanceof IHasModel) {
-				((IHasModel) item).registerModels();
-			}
-		}
+		ItemInit.ITEMS.stream().filter(item -> item instanceof IHasModel).map(item -> (IHasModel) item).forEach(IHasModel::registerModels);
 	}
 
 	@SubscribeEvent
 	public static void registerPotions(RegistryEvent.Register<Potion> event)
 	{
-		event.getRegistry().registerAll(YellowTintEffect.YELLOW_TINT);
+		registerPotion(event.getRegistry(), YellowTintEffect.YELLOW_TINT);
+		registerPotion(event.getRegistry(), ClairvoyanceEffect.CLAIRVOYANCE);
+	}
+
+	private static void registerPotion(IForgeRegistry<Potion> registry, Potion potion)
+	{
+		registry.register(potion);
 	}
 }
