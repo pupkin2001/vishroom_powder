@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -36,8 +35,8 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         result-encoding: string
         script: |
-          let version = '${{ steps.version.outputs.result }}';
-          return version.includes('alpha') ? 'alpha' : (version.includes('beta') ? 'beta' : 'release');
+          let versionValue = '${{ steps.version.outputs.result }}';
+          return versionValue.includes('alpha') ? 'alpha' : (versionValue.includes('beta') ? 'beta' : 'release');
     - name: Log Version Info
       env:
         VERSION: ${{ steps.version.outputs.result }}
@@ -48,7 +47,7 @@ jobs:
       with:
         arguments: build
       env:
-        VERSION: ${{ steps.version.outputs.result }}
+        BUILD_VERSION: ${{ steps.version.outputs.result }}
         github-tag: ${{ github.ref }}
         github-draft: true
         github-prerelease: false
