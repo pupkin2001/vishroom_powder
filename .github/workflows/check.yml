@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-build:
+  check:
     runs-on: ubuntu-latest
 
     steps:
