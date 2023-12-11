@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SSS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "vishroom_powder:sweet_sugar"
+    }
+  },
+  "result": {
+    "item": "vishroom_powder:sweet_sugar_cube",
+    "count": 1
+  }
+}

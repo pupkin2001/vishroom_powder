@@ -14,10 +14,13 @@ import pupkin.mod.init.ItemInit;
 import pupkin.mod.util.interfaces.IHasModel;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 public class ItemVishroomPowder extends ItemFood implements IHasModel
 {
-	public ItemVishroomPowder(String name, CreativeTabs tab, int amount, float saturation, boolean isWolfFood)
+	private final List<PotionEffect> effects;
+
+	public ItemVishroomPowder(String name, CreativeTabs tab, int amount, float saturation, boolean isWolfFood, List<PotionEffect> effects)
 	{
 		super(amount, saturation, isWolfFood);
 		setUnlocalizedName(name);
@@ -26,26 +29,29 @@ public class ItemVishroomPowder extends ItemFood implements IHasModel
 		setMaxStackSize(Integer.MAX_VALUE);
 
 		ItemInit.ITEMS.add(this);
+		this.effects = effects;
 	}
 
 	@Override
 	protected void onFoodEaten(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull EntityPlayer player)
 	{
-		applyCustomEffect(player);
+		applyCustomEffects(player);
 		super.onFoodEaten(stack, worldIn, player);
+	}
+
+	private void applyCustomEffects(EntityLivingBase entity)
+	{
+		if (!entity.world.isRemote) {
+			for (PotionEffect effect : effects) {
+				entity.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier()));
+			}
+		}
 	}
 
 	@Override
 	public void registerModels()
 	{
 		VishroomPowder.proxy.registerModel(this, 0);
-	}
-
-	private void applyCustomEffect(EntityLivingBase entity)
-	{
-		if (!entity.world.isRemote) {
-			entity.addPotionEffect(new PotionEffect(YellowTintEffect.YELLOW_TINT, 1200, 0));
-		}
 	}
 
 	@Nonnull

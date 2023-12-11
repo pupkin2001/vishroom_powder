@@ -39,30 +39,32 @@ public class ItemEdibleFood extends ItemFood implements IHasModel
 	@Override
 	protected void onFoodEaten(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull EntityPlayer player)
 	{
-		// Add your random potion effect here
+		applyRandomPotionEffect(player);
+		super.onFoodEaten(stack, worldIn, player);
+	}
+
+	private void applyRandomPotionEffect(EntityLivingBase entity)
+	{
 		Random random = new Random();
-		int randomEffect = random.nextInt(3); // Change 3 to the number of potion effects you want to apply
+		int randomEffect = random.nextInt(3);
 
 		switch (randomEffect) {
 		case 0:
-			applyPotionEffect(player, Potion.getPotionFromResourceLocation("speed"));
+			applyPotionEffect(entity, Potion.getPotionFromResourceLocation("speed"));
 			break;
 		case 1:
-			applyPotionEffect(player, Potion.getPotionFromResourceLocation("strength"));
+			applyPotionEffect(entity, Potion.getPotionFromResourceLocation("strength"));
 			break;
 		case 2:
-			applyPotionEffect(player, Potion.getPotionFromResourceLocation("jump_boost"));
+			applyPotionEffect(entity, Potion.getPotionFromResourceLocation("jump_boost"));
 			break;
-		// Add more cases for additional potion effects
 		}
-
-		super.onFoodEaten(stack, worldIn, player);
 	}
 
 	private void applyPotionEffect(EntityLivingBase entity, Potion potion)
 	{
 		if (potion != null) {
-			entity.addPotionEffect(new PotionEffect(potion, 200, 1)); // Adjust the duration and amplifier as needed
+			entity.addPotionEffect(new PotionEffect(potion, 200, 1));
 		}
 	}
 
