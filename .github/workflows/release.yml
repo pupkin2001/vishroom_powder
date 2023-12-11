@@ -39,7 +39,10 @@ jobs:
 
     - name: Get PR Commits
       id: get_pr_commits
-      run: echo "::set-output name=commits::$(git log --merges --pretty=format:'%s' ${{ github.event.before }}..${{ github.sha }})"
+      run: echo "COMMITS=$(git log --pretty=format:'%s' ${{ github.event.before }}..${{ github.sha }})" >> $GITHUB_ENV
+
+    - name: Display PR Commits
+      run: echo "${{ env.COMMITS }}"
 
     - name: Create Release Tag
       if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs, 'version'))
@@ -56,4 +59,4 @@ jobs:
         files: ./build/libs/${{ steps.extract_values.outputs.group }}-${{ steps.extract_values.outputs.version }}.jar
         tag_name: v${{ steps.extract_values.outputs.version }}
         release_name: Release v${{ steps.extract_values.outputs.version }}
-        body: ${{ steps.get_pr_commits.outputs.commits }}
+        body: ${{ env.COMMITS }}
