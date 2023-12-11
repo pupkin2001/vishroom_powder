@@ -37,32 +37,23 @@ jobs:
     - name: Build Mod
       run: ./gradlew build
 
-    - name: Upload Release
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ github.event.release.upload_url || '' }}
-        asset_path: ./build/libs/${{ steps.extract_values.outputs.group }}-${{ steps.extract_values.outputs.version }}.jar
-        asset_name: your-mod-${{ steps.extract_values.outputs.version }}.jar
-        asset_content_type: application/java-archive
-
     - name: Get PR Commits
       id: get_pr_commits
       run: echo "::set-output name=commits::$(git log --merges --pretty=format:'%s' ${{ github.event.before }}..${{ github.sha }})"
 
     - name: Create Release Tag
-      if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
+      if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs, 'version'))
       run: git tag -a v${{ steps.extract_values.outputs.version }} -m "Release v${{ steps.extract_values.outputs.version }}"
 
     - name: Push Release Tag
-      if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
+      if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs, 'version'))
       run: git push origin v${{ steps.extract_values.outputs.version }}
 
     - name: Create GitHub Release
-      if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
-      uses: actions/create-release@v1
+      if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs, 'version'))
+      uses: softprops/action-gh-release@v1
       with:
+        files: ./build/libs/${{ steps.extract_values.outputs.group }}-${{ steps.extract_values.outputs.version }}.jar
         tag_name: v${{ steps.extract_values.outputs.version }}
         release_name: Release v${{ steps.extract_values.outputs.version }}
         body: ${{ steps.get_pr_commits.outputs.commits }}
-        draft: false
-        prerelease: false
