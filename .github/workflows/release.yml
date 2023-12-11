@@ -38,8 +38,8 @@ jobs:
       run: |
         echo "Before: ${{ github.event.before }}"
         echo "After: ${{ github.sha }}"
-        COMMITS=$(git log --pretty=format:'%s' ${{ github.event.before }}..${{ github.sha }})
-        echo "Raw Commits: $(git log ${{ github.event.before }}..${{ github.sha }})"
+        COMMITS=$(git log --pretty=format:'%s' ${GITHUB_REF#refs/pull/}..${{ github.sha }})
+        echo "Raw Commits: $(git log ${GITHUB_REF#refs/pull/}..${{ github.sha }})"
         echo "PR Commits: $COMMITS"
         echo "##[set-output name=commits;]$COMMITS"
 
