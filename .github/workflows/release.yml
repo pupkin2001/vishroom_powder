@@ -4,7 +4,7 @@ on:
   push:
     tags:
       - 'v*'
-  workflow_dispatch:
+  workflow_dispatch: # Добавляем возможность ручного запуска
 
 jobs:
   build:
@@ -14,6 +14,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    - name: Grant execute permissions to gradlew
+      run: chmod +x ./gradlew
     - name: Set up JDK 8
       uses: actions/setup-java@v3
       with:
@@ -55,13 +57,3 @@ jobs:
         name: Visroom Powder 1.12.2-${{ steps.version.outputs.result }}
         version: ${{ steps.version.outputs.result }}
         version-type: ${{ steps.version_type.outputs.result }}
-        java: 8
-        loaders: |
-          forge
-        changelog-file: CHANGELOG.md
-    - name: Create release tag
-      uses: softprops/action-gh-release@v1
-      with:
-        files: 'build/libs/*'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
