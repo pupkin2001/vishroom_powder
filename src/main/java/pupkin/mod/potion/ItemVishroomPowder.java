@@ -9,44 +9,50 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import pupkin.mod.VisroomPowder;
+import pupkin.mod.VishroomPowder;
 import pupkin.mod.init.ItemInit;
 import pupkin.mod.util.interfaces.IHasModel;
 
 import javax.annotation.Nonnull;
 
-public class ItemVisroomPowder extends ItemFood implements IHasModel
+public class ItemVishroomPowder extends ItemFood implements IHasModel
 {
-
-	public ItemVisroomPowder(String name, CreativeTabs tab, int amount, float saturation, boolean isWolfFood) {
+	public ItemVishroomPowder(String name, CreativeTabs tab, int amount, float saturation, boolean isWolfFood)
+	{
 		super(amount, saturation, isWolfFood);
 		setUnlocalizedName(name);
 		setRegistryName(name);
 		setCreativeTab(tab);
+		setMaxStackSize(Integer.MAX_VALUE);
 
 		ItemInit.ITEMS.add(this);
 	}
 
 	@Override
-	protected void onFoodEaten(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull EntityPlayer player) {
+	protected void onFoodEaten(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull EntityPlayer player)
+	{
 		applyCustomEffect(player);
 		super.onFoodEaten(stack, worldIn, player);
 	}
 
 	@Override
-	public void registerModels() {
-		VisroomPowder.proxy.registerModel(this, 0);
+	public void registerModels()
+	{
+		VishroomPowder.proxy.registerModel(this, 0);
 	}
 
-	private void applyCustomEffect(EntityLivingBase entity) {
+	private void applyCustomEffect(EntityLivingBase entity)
+	{
 		if (!entity.world.isRemote) {
-			entity.addPotionEffect(new PotionEffect(YellowTintEffect.YELLOW_TINT, 200, 0));
+			entity.addPotionEffect(new PotionEffect(YellowTintEffect.YELLOW_TINT, 1200, 0));
 		}
 	}
 
 	@Nonnull
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, @Nonnull EntityPlayer playerIn, @Nonnull EnumHand handIn) {
+	public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, @Nonnull EntityPlayer playerIn, @Nonnull EnumHand handIn)
+	{
+		playerIn.setActiveHand(handIn);
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 }

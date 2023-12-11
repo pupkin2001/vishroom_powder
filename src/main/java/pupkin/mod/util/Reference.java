@@ -3,11 +3,11 @@ package pupkin.mod.util;
 public class Reference
 {
 	// Mod Constants
-	public static final String MOD_ID = "visroom_powder";
-	public static final String NAME = "Visroom Powder";
+	public static final String MOD_ID = "vishroom_powder";
+	public static final String NAME = "Vishroom Powder";
 	public static final String BUILD = "GRADLE:BUILD";
 	public static final String VERSION = "GRADLE:VERSION-" + BUILD;
-	public static final String DEPENDENCIES = "";
+	public static final String DEPENDENCIES = "required-after:thaumcraft";
 	public static final String ACCEPTED_VERSIONS = "[1.12, 1.12.1, 1.12.2]";
 
 	// Proxy Constants

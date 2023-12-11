@@ -1,17 +1,21 @@
 [
-{
-  "modid": "visroom_powder",
-  "name": "Visroom Powder",
-  "description": "Funny powder.",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "https://github.com/pupkin2001/visroom_powder",
-  "updateJSON": "",
-  "authorList": ["pupkin2001"],
-  "credits": "Visroom color palette from Thaumcraft 6 by Azanor.",
-  "logoFile": "assets/visroom_powder/textures/logo.png",
-  "screenshots": [],
-  "requiredMods": ["thaumcraft"],
-  "dependencies": []
-}
+  {
+    "modid": "vishroom_powder",
+    "name": "Vishroom Powder",
+    "description": "Funny powder.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://github.com/pupkin2001/vishroom_powder",
+    "updateJSON": "",
+    "authorList": [
+      "pupkin2001"
+    ],
+    "credits": "Vishroom color palette from Thaumcraft 6 by Azanor.",
+    "logoFile": "assets/vishroom_powder/textures/logo.png",
+    "screenshots": [],
+    "requiredMods": [
+      "thaumcraft"
+    ],
+    "dependencies": []
+  }
 ]
