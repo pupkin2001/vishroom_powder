@@ -1,64 +1,59 @@
-name: Release Mod
+name: Build
 
 on:
-  release:
-    types:
-      - created
-  pull_request:
-    types:
-      - closed
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Specify the version for the release'
-        required: true
+  push:
+    tags:
+      - 'v*'
 
 jobs:
-  build:
+  main:
+
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Setup JDK 8
-      uses: actions/setup-java@v2
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Set up JDK 8
+      uses: actions/setup-java@v3
       with:
-        distribution: 'adopt'
         java-version: '8'
-
-    - name: Grant execute permissions to gradlew
-      run: chmod +x ./gradlew
-
-    - name: Build Mod
+        distribution: 'adopt'
+    - name: Get Version
+      id: version
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        result-encoding: string
+        script: |
+          let ref = '${{ github.ref }}';
+          return ref.startsWith('refs/tags/v') ? ref.replace('refs/tags/v', '') : 'indev';
+    - name: Get Version Type
+      id: version_type
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        result-encoding: string
+        script: |
+          let version = '${{ steps.version.outputs.result }}';
+          return version.includes('alpha') ? 'alpha' : (version.includes('beta') ? 'beta' : 'release');
+    - name: Log Version Info
+      env:
+        VERSION: ${{ steps.version.outputs.result }}
+        VERSION_TYPE: ${{ steps.version_type.outputs.result }}
+      run: echo "version = $VERSION, type = $VERSION_TYPE"
+    - name: Build
       run: ./gradlew build
-
-    - name: Get PR Commits
-      id: get_pr_commits
-      run: |
-        echo "Before: ${{ github.event.before }}"
-        echo "After: ${{ github.sha }}"
-        COMMITS=$(git log --pretty=format:'%s' ${GITHUB_REF#refs/pull/}..${{ github.sha }})
-        echo "Raw Commits: $(git log ${GITHUB_REF#refs/pull/}..${{ github.sha }})"
-        echo "PR Commits: $COMMITS"
-        echo "##[set-output name=commits;]$COMMITS"
-
-    - name: Display PR Commits
-      run: echo "${{ steps.get_pr_commits.outputs.commits }}"
-
-    - name: Create Release Tag
-      if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs, 'version'))
-      run: git tag -a v${{ steps.extract_values.outputs.version }} -m "Release v${{ steps.extract_values.outputs.version }}"
-
-    - name: Push Release Tag
-      if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs, 'version'))
-      run: git push origin v${{ steps.extract_values.outputs.version }}
-
-    - name: Create GitHub Release
-      if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs, 'version'))
+      env:
+        VERSION: ${{ steps.version.outputs.result }}
+    - name: Create release tag
+      run: git tag -a v${{ steps.version.outputs.result }} -m "Release v${{ steps.version.outputs.result }}"
+    - name: Push tags
+      run: git push origin --tags
+    - name: Publish Release
       uses: softprops/action-gh-release@v1
       with:
-        files: ./build/libs/${{ steps.extract_values.outputs.group }}-${{ steps.extract_values.outputs.version }}.jar
-        tag_name: v${{ steps.extract_values.outputs.version }}
-        release_name: Release v${{ steps.extract_values.outputs.version }}
-        body: ${{ steps.get_pr_commits.outputs.commits }}
+        files: build/libs/*
+        token: ${{ secrets.GITHUB_TOKEN }}
+        release_name: "TerraFirmaCraft 1.12.2-${{ steps.version.outputs.result }}"
+        tag_name: "v${{ steps.version.outputs.result }}"
