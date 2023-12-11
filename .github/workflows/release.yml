@@ -36,6 +36,8 @@ jobs:
     - name: Get PR Commits
       id: get_pr_commits
       run: |
+        echo "Before: ${{ github.event.before }}"
+        echo "After: ${{ github.sha }}"
         COMMITS=$(git log --pretty=format:'%s' ${{ github.event.before }}..${{ github.sha }})
         echo "PR Commits: $COMMITS"
         echo "##[set-output name=commits;]$COMMITS"
