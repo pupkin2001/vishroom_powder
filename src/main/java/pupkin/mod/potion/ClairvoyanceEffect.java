@@ -9,18 +9,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 
 import javax.annotation.Nonnull;
-import java.util.Objects;
 import java.util.UUID;
 
 public class ClairvoyanceEffect extends Potion
 {
 	public static final Potion CLAIRVOYANCE = new ClairvoyanceEffect();
-
 	private static final float FOG_DENSITY = 0.005F;
 	private static final float FOG_START = 500.0F;
 	private static final float FOG_END = 1000.0F;
-
-	private static final UUID SPEED_MODIFIER_UUID = UUID.fromString("59F84442-AD87-403f-A260-4F24CE154978"); // Unique ID for the speed modifier
+	private static final UUID CLAIRVOYANCE_MODIFIER_UUID = UUID.fromString("59F84442-AD87-403f-A260-4F24CE154978");
+	private static final String MOVEMENT_SPEED_MODIFIER_NAME = "Clairvoyance Speed Boost";
+	private static final String MINING_SPEED_MODIFIER_NAME = "Clairvoyance Mining Speed Boost";
 
 	private ClairvoyanceEffect()
 	{
@@ -49,11 +48,8 @@ public class ClairvoyanceEffect extends Potion
 	{
 		if (entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
-			IAttributeInstance movementSpeed = player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
-
-			if (movementSpeed.getModifier(SPEED_MODIFIER_UUID) == null) {
-				movementSpeed.applyModifier(new AttributeModifier(SPEED_MODIFIER_UUID, "Clairvoyance Speed Boost", 1.2D, 2));
-			}
+			modifyAttribute(player, SharedMonsterAttributes.MOVEMENT_SPEED, MOVEMENT_SPEED_MODIFIER_NAME, 10 + 0.5 * amplifier);
+			modifyAttribute(player, SharedMonsterAttributes.ATTACK_SPEED, MINING_SPEED_MODIFIER_NAME, 10 + 0.5 * amplifier);
 		}
 	}
 
@@ -62,11 +58,26 @@ public class ClairvoyanceEffect extends Potion
 	{
 		if (entityLivingBaseIn instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entityLivingBaseIn;
-			IAttributeInstance movementSpeed = player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
+			removeAttributeModifier(player, SharedMonsterAttributes.MOVEMENT_SPEED);
+			removeAttributeModifier(player, SharedMonsterAttributes.ATTACK_SPEED);
+		}
+	}
 
-			if (movementSpeed.getModifier(SPEED_MODIFIER_UUID) != null) {
-				movementSpeed.removeModifier(Objects.requireNonNull(movementSpeed.getModifier(SPEED_MODIFIER_UUID)));
-			}
+	private void modifyAttribute(EntityPlayer player, net.minecraft.entity.ai.attributes.IAttribute attribute, String modifierName, double modifierValue)
+	{
+		IAttributeInstance attributeInstance = player.getEntityAttribute(attribute);
+		AttributeModifier modifier = new AttributeModifier(CLAIRVOYANCE_MODIFIER_UUID, modifierName, modifierValue, 0); // Use a duration of 0 for permanent effect
+		if (attributeInstance.getModifier(CLAIRVOYANCE_MODIFIER_UUID) == null) {
+			attributeInstance.applyModifier(modifier);
+		}
+	}
+
+	private void removeAttributeModifier(EntityPlayer player, net.minecraft.entity.ai.attributes.IAttribute attribute)
+	{
+		IAttributeInstance attributeInstance = player.getEntityAttribute(attribute);
+		AttributeModifier modifier = attributeInstance.getModifier(CLAIRVOYANCE_MODIFIER_UUID);
+		if (modifier != null) {
+			attributeInstance.removeModifier(modifier);
 		}
 	}
 }

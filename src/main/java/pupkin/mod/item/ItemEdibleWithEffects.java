@@ -1,4 +1,4 @@
-package pupkin.mod.potion;
+package pupkin.mod.item;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,11 +16,11 @@ import pupkin.mod.util.interfaces.IHasModel;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class ItemVishroomPowder extends ItemFood implements IHasModel
+public class ItemEdibleWithEffects extends ItemFood implements IHasModel
 {
 	private final List<PotionEffect> effects;
 
-	public ItemVishroomPowder(String name, CreativeTabs tab, int amount, float saturation, boolean isWolfFood, List<PotionEffect> effects)
+	public ItemEdibleWithEffects(String name, CreativeTabs tab, int amount, float saturation, boolean isWolfFood, List<PotionEffect> effects)
 	{
 		super(amount, saturation, isWolfFood);
 		setUnlocalizedName(name);
