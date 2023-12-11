@@ -7,6 +7,11 @@ on:
   pull_request:
     types:
       - closed
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Specify the version for the release'
+        required: true
 
 jobs:
   build:
@@ -53,7 +58,7 @@ jobs:
       run: git push origin v${{ steps.extract_values.outputs.version }}
 
     - name: Create GitHub Release
-      if: github.event_name == 'release'
+      if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
       uses: actions/create-release@v1
       with:
         tag_name: v${{ steps.extract_values.outputs.version }}
