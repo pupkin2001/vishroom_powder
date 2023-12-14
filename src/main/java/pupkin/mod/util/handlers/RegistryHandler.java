@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import pupkin.mod.init.ItemInit;
 import pupkin.mod.potion.ClairvoyanceEffect;
+import pupkin.mod.potion.DistortionEffect;
 import pupkin.mod.potion.YellowTintEffect;
 import pupkin.mod.util.Reference;
 import pupkin.mod.util.interfaces.IHasModel;
@@ -33,6 +34,7 @@ public class RegistryHandler
 	{
 		registerPotion(event.getRegistry(), YellowTintEffect.YELLOW_TINT);
 		registerPotion(event.getRegistry(), ClairvoyanceEffect.CLAIRVOYANCE);
+		registerPotion(event.getRegistry(), DistortionEffect.DISTORTION);
 	}
 
 	private static void registerPotion(IForgeRegistry<Potion> registry, Potion potion)

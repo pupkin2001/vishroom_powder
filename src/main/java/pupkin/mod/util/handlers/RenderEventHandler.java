@@ -15,6 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import pupkin.mod.potion.ClairvoyanceEffect;
+import pupkin.mod.potion.DistortionEffect;
 import pupkin.mod.potion.YellowTintEffect;
 
 import java.nio.FloatBuffer;
@@ -34,9 +35,11 @@ public class RenderEventHandler
 		if (mc.player != null) {
 			Potion yellowTint = YellowTintEffect.YELLOW_TINT;
 			Potion clairvoyance = ClairvoyanceEffect.CLAIRVOYANCE;
+			Potion distortion = DistortionEffect.DISTORTION;
 
-			if (mc.player.isPotionActive(yellowTint) || mc.player.isPotionActive(clairvoyance)) {
-				Potion activePotion = mc.player.getActivePotionEffect(yellowTint) != null ? yellowTint : clairvoyance;
+			if (mc.player.isPotionActive(yellowTint) || mc.player.isPotionActive(clairvoyance) || mc.player.isPotionActive(distortion)) {
+				Potion activePotion = mc.player.getActivePotionEffect(yellowTint) != null ? yellowTint :
+						(mc.player.getActivePotionEffect(clairvoyance) != null ? clairvoyance : distortion);
 
 				int liquidColor = activePotion.getLiquidColor();
 				float red = (float) (liquidColor >> 16 & 255) / 255.0F;
