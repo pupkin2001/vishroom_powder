@@ -15,7 +15,7 @@ public class YellowTintEffect extends Potion
 
 	private YellowTintEffect()
 	{
-		super(false, 0xFFFF00);
+		super(true, 0xFFFF00);
 		setRegistryName("yellow_tint");
 		setPotionName("effect.yellow_tint");
 	}
